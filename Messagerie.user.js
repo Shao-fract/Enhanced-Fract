@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name      Messagerie beta
+// @name      Messagerie
 // @version 1.0
 // @author   Ce connard de Shao
 // @description Ajoute une interface cliquable pour les propals. Incrément et décrémente de 1. Shift+clique transfère tout le stock, ctrl+clique incrémente de 0.1
