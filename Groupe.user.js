@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Newgroup
+// @name         Groupe
 // @namespace    http://fract.org
 // @version      0.9
 // @description  Script de gestion du groupe. Manque la gestion des veh encore
