@@ -1,6 +1,8 @@
 # Enhanced-Fract
 Divers outils pour fract
 
+Nécessite TamperMonkey : https://www.tampermonkey.net/
+
 1 - Messagerie : 
 
 Ajoute une interface pour élaborer les propals. L'inferface originale garde la main in fine. 
