@@ -5,7 +5,6 @@
 // @description  Script de gestion du groupe. Manque la gestion des veh encore
 // @author       Ce connard de Shao
 // @match    https://v8.fract.org/g_mbr.php*
-// @require     https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 
 // ==/UserScript==
 function addGlobalStyle(css) {
@@ -13,7 +12,6 @@ function addGlobalStyle(css) {
     head = document.getElementsByTagName('head')[0];
     if (!head) { return; }
     style = document.createElement('style');
-    style.type = 'text/css';
     style.innerHTML = css;
     head.appendChild(style);
 }
@@ -23,7 +21,7 @@ td {padding:5px;vertical-align: text-top;}
 thead{border-bottom: 0.5px solid #eee;color:#cccccc}
 tfoot{border-top: 0.5px solid #eee;}
 .tdmarchandise{text-align: center;}
-.tdnom{width:225px;}
+.tdnom{width:230px;}
 .nrt{text-align: center;color:brown;}
 .eau{text-align: center;color:blue;}
 .med{text-align: center;color:green;}
@@ -40,6 +38,7 @@ class personnage{
      this.nb=pv
      this.cbt=cbt
      this.arme=1
+     this.degats=1
      this.nomarme=''
      this.poids=20
      this.nrt=0
@@ -60,9 +59,11 @@ let nom;
 let cazid;
 let pars;
 let arme;
+let degats;
 let nomarme;
 let parscbt;
 let cbttotal=0
+let totaldegats=0;
 let march;
 // marchandises contient des objets marchandise :)
 let marchandises=[];
@@ -113,13 +114,16 @@ for (fiche of fiches){
     nomarme=pars[2].split('(')[1];
     perso.nomarme=nomarme
     arme= pars[2].split('(x')[1];
+    degats=arme.split('d')[1]
+    degats=degats.split(')');
     arme=arme.split('d')[0];
+    perso.degats=Number(degats[0]);
     perso.arme=Number(arme);
     pars[2]=pars[2].split('(')[0];
   }
   perso.cbt=Number((pars[2]).split('>')[1]);
   cbttotal+=perso.cbt*perso.arme;
- 
+  totaldegats+=perso.degats;
   //marchandises
   march=fiche.querySelectorAll("*[style]");
   for(let item of march){
@@ -179,7 +183,9 @@ titre.appendChild(titreeau);
 titre.appendChild(titremed);
 thead.appendChild(titre);
 //boucle perso
+let chef=0
 for (let perso of personnages){
+
   let tr=document.createElement("tr");
   //nom et cbt
   let tdnom=document.createElement("td");
@@ -187,13 +193,13 @@ for (let perso of personnages){
   //gère la présence d'une arme
   let affichearme='';
   if(perso.nomarme!=''){
-    affichearme='<petit> ('+perso.cbt+' x '+perso.arme+' '+perso.nomarme+')</petit>';
+    affichearme='<petit> ('+perso.cbt+' x '+perso.arme+'d'+perso.degats+' '+perso.nomarme+')</petit>';
   }
   tdnom.innerHTML='<a href="msg_ecrire.php?cazid='
                    +perso.cazid+'">'
                    +perso.nom
                    +'</a> <br> <img src="https://www.fract.org/pix/caracteristique/cbt.png" alt="Combat">'
-                   +perso.cbt*perso.arme
+                   +Math.round(perso.cbt*perso.arme*100)/100
                    +affichearme;
 
   //pv et geo
@@ -259,17 +265,22 @@ for (let perso of personnages){
   tr.appendChild(tdmed);
   tr.appendChild(tdcharge);
   tr.appendChild(tdpoids);
-  tr.appendChild(candid);
+  
   tr.appendChild(nompersoembarquer);
   tr.appendChild(nompersodebarquer);
-  tr.appendChild(nompersovirer);
+  if(chef!==0){
+    tr.appendChild(candid);
+    tr.appendChild(nompersovirer);
+  }
+
   tbody.appendChild(tr);
+  chef+=1
 }
 // Dernière ligne :les totaux
 let total=document.createElement("tr");
 //cbt
 let tdtotalcbt=document.createElement("td");
-tdtotalcbt.innerHTML='<img src="https://www.fract.org/pix/caracteristique/cbt.png" alt="Combat Total">Cbt du groupe : '+Math.round(cbttotal*100)/100;
+tdtotalcbt.innerHTML='<img src="https://www.fract.org/pix/caracteristique/cbt.png" alt="Combat Total">Cbt du groupe : '+Math.round(cbttotal*100)/100+'d'+totaldegats;
 //nem
 let totalnrt=document.createElement("td")
 totalnrt.innerHTML=nem[0];
@@ -282,7 +293,7 @@ totalmed.innerHTML= nem[2];
 totalmed.className="med";
 //poids
 let tdpoidstotal=document.createElement("td");
-tdpoidstotal.innerHTML=poidstotal+' kg';
+tdpoidstotal.innerHTML=Math.round(poidstotal*10)/10+' kg';
 let tdchargetotal=document.createElement("td");
 //charge et surcharge
 if (poidstotal<0){
@@ -341,7 +352,7 @@ cadre.getElementsByClassName('tableperso')[0].appendChild(tableperso);
 cadre.getElementsByClassName('affichemarchandises')[0].appendChild(affichemarchandises);
 
 
-//load du script 
+//load du script
 function synthese (){
     document.getElementsByClassName("col-lg-12 col-md-12")[0].prepend(cadre);
 }
