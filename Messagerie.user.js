@@ -30,7 +30,6 @@ addGlobalStyle(`
      width:40px;
      height:auto;
      }
-
 .tdmarchandise:hover{
      opacity:0.5;
      }
@@ -300,16 +299,16 @@ stock.id='stock';
 //ligne de titre
 let titre=document.createElement('div');
 titre.className="tableau"
-let tdnom1=document.createElement('div');
+let tdnom1=document.createElement('h4');
 tdnom1.className="titre";
 tdnom1.innerHTML='Ton stock';
-let tdnom2=document.createElement('div');
+let tdnom2=document.createElement('h4');
 tdnom2.className="titre";
 tdnom2.innerHTML='Stock du pigeon';
-let tddon=document.createElement('div');
+let tddon=document.createElement('h4');
 tddon.className="titre";
 tddon.innerHTML='Donner';
-let tddemande=document.createElement('div');
+let tddemande=document.createElement('h4');
 tddemande.className="titre";
 tddemande.innerHTML='Demander';
 titre.appendChild(tdnom1);
