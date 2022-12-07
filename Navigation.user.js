@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Navigation
 // @namespace    Go fuck yourself
-// @version      1
+// @version      1.0
 // @description  Fuck la rose des vents
 // @author       Shao
 // @match        https://v8.fract.org/index.php*
