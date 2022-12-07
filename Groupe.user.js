@@ -144,11 +144,13 @@ for (fiche of fiches){
     //gère les autres marchandises en testant existance et ajout + incrément
     else {
       exist=marchandises.map(x => x.nom).indexOf(alt[0])
-      if (exist ===-1){
-        marchandises.push(new marchandise(alt[0],png,nbmarch));
-      }
-      else{
-        marchandises[exist].nb+=nbmarch
+      if(nbmarch!==0){
+        if (exist ===-1){
+          marchandises.push(new marchandise(alt[0],png,nbmarch));
+        }
+        else{
+          marchandises[exist].nb+=nbmarch
+        }
       }
     }
   }
