@@ -12,8 +12,12 @@ Ajoute une interface pour élaborer les propals. L'interface originale garde la 
 
 2 - Navigation :
 
+![démo navigation git](https://user-images.githubusercontent.com/65644382/206090219-ef9a107d-4706-4579-b3e3-2ee1c4ff9bab.jpg)
+
+
 Ajoute des boutons de navigation aux points cardinaux pour éviter les missclick de la rose des vents. Celle-ci est conservée
-![démo navigation](https://user-images.githubusercontent.com/65644382/206089665-3d2c03f0-6c5d-4b00-8ae1-a9e8392287d5.jpg)
+
+
 3 - Groupe :
 
 Inspiré par le script de Marthus, affiche un résumé du groupe avec les infos de chaque perso + total cbt et total charge.
