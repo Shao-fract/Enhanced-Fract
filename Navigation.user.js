@@ -26,34 +26,34 @@ const SudEst = (e) => {
     window.location="https://v8.fract.org/index.php?act=go&quoi=se&";
 };
 
-var boutonnord=document.createElement("input");
+let boutonnord=document.createElement("input");
 boutonnord.type="button";
 boutonnord.value="Nord";
 boutonnord.onclick = Nord;
 boutonnord.style="margin-left:200; margin-right:200;color:#cecece;background-color:#840202;opacity:1;border-radius: 20px;font-size: 14px;font-weight: 500;padding: 7px 18px;border: 2px solid transparent;border-color: #7a4444;"
 
-var boutonnordouest=document.createElement("input");
+let boutonnordouest=document.createElement("input");
 boutonnordouest.type="button";
 boutonnordouest.value="NO";
 boutonnordouest.onclick = NordOuest;
 boutonnordouest.style="position:relative;top:155;color:#cecece;background-color:#840202;opacity:1;border-radius: 20px;font-size: 14px;font-weight: 500;padding: 7px 18px;border: 2px solid transparent;border-color: #7a4444;";
-var boutonnordest=document.createElement("input");
+let boutonnordest=document.createElement("input");
 boutonnordest.type="button";
 boutonnordest.value="NE";
 boutonnordest.onclick = NordEst;
 boutonnordest.style="position:relative;top:155;color:#cecece;background-color:#840202;opacity:1;border-radius: 20px;font-size: 14px;font-weight: 500;padding: 7px 18px;border: 2px solid transparent;border-color: #7a4444;";
-var boutonsud=document.createElement("input");
+let boutonsud=document.createElement("input");
 boutonsud.type="button";
 boutonsud.value="Sud";
 boutonsud.onclick = Sud;
 boutonsud.style="margin-left:200; margin-right:200;color:#cecece;background-color:#840202;opacity:1;border-radius: 20px;font-size: 14px;font-weight: 500;padding: 7px 18px;border: 2px solid transparent;border-color: #7a4444;"
 
-var boutonsudouest=document.createElement("input");
+let boutonsudouest=document.createElement("input");
 boutonsudouest.type="button";
 boutonsudouest.value="SO";
 boutonsudouest.onclick = SudOuest;
 boutonsudouest.style="position:relative;bottom:155;color:#cecece;background-color:#840202;opacity:1;border-radius: 20px;font-size: 14px;font-weight: 500;padding: 7px 18px;border: 2px solid transparent;border-color: #7a4444;";
-var boutonsudest=document.createElement("input");
+let boutonsudest=document.createElement("input");
 boutonsudest.type="button";
 boutonsudest.value="SE";
 boutonsudest.onclick = SudEst;
