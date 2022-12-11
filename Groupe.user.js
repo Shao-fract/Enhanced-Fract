@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Groupe
 // @namespace    http://fract.org
-// @version      0.9
+// @version      1.0
 // @description  Script de gestion du groupe. Manque la gestion des veh encore
 // @author       Ce connard de Shao
 // @match    https://v8.fract.org/g_mbr.php*
@@ -106,7 +106,14 @@ for (fiche of fiches){
 
   // pions pv cbt
   pars=pars.innerHTML.split('<br>');
+  // gère la maladie
+  if (pars[0].includes('malade')){
+    perso.pions= pars[0] +'<br>'+pars[1];
+    pars.shift();
+  }
+  else{
   perso.pions=pars[0];
+  }
   perso.pv=pars[1];
   //gère la présence d'une arme
   if (pars[2].includes('(')){
@@ -117,7 +124,7 @@ for (fiche of fiches){
     degats=arme.split('d')[1]
     degats=degats.split(')');
     arme=arme.split('d')[0];
-    perso.degats=Number(degats[0]);
+    perso.degats=Math.round(Number(degats[0])*10)/10;
     perso.arme=Number(arme);
     pars[2]=pars[2].split('(')[0];
   }
@@ -282,16 +289,16 @@ for (let perso of personnages){
 let total=document.createElement("tr");
 //cbt
 let tdtotalcbt=document.createElement("td");
-tdtotalcbt.innerHTML='<img src="https://www.fract.org/pix/caracteristique/cbt.png" alt="Combat Total">Cbt du groupe : '+Math.round(cbttotal*100)/100+'d'+totaldegats;
+tdtotalcbt.innerHTML='<img src="https://www.fract.org/pix/caracteristique/cbt.png" alt="Combat Total">Cbt du groupe : '+Math.round(cbttotal*100)/100+'d'+Math.round(totaldegats*10)/10;
 //nem
 let totalnrt=document.createElement("td")
-totalnrt.innerHTML=nem[0];
+totalnrt.innerHTML= Math.round(nem[0]*10)/10;
 totalnrt.className="nrt";
 let totaleau=document.createElement("td")
-totaleau.innerHTML= nem[1];
+totaleau.innerHTML= Math.round(nem[1]*10)/10;
 totaleau.className="eau";
 let totalmed=document.createElement("td")
-totalmed.innerHTML= nem[2];
+totalmed.innerHTML= Math.round(nem[2]*10)/10;
 totalmed.className="med";
 //poids
 let tdpoidstotal=document.createElement("td");
