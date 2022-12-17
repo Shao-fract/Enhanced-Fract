@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name      Fix images outil
-// @version 1.0
+// @version 1.1
 // @author   Ce connard de Shao
 // @description fix l'absence d'image sur les outils
 // @match     https://v8.fract.org/msg_ecrire.php?*
@@ -8,14 +8,21 @@
 // ==/UserScript==
 
 
-let outils=document.querySelectorAll("*[bgcolor]");
-for (let fix of outils){
-    fix=fix.getElementsByTagName('img')[0];
-    let outil=fix.src.indexOf('liste//');
-    if(outil !==-1){
-     fix.src=fix.src.replace('liste//', 'liste/outil/')
+let objets=document.querySelectorAll("*[bgcolor]");
+for (let fix of objets){
+  fix=fix.getElementsByTagName('img')[0];
+  let objet=fix.src.indexOf('liste//');
+  if(objet !==-1){
+    let type=fix.src.split('//')[1];
+    type=Number(type.split('.')[0]);
+    if (fix < 38){
+      fix.src=fix.src.replace('liste//', 'liste/outil/')
     }
+    else{
+      fix.src=fix.src.replace('liste//', 'liste/objet/')
     }
+  }
+}
 
 
 
