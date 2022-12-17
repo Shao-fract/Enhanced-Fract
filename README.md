@@ -29,7 +29,7 @@ Ne gère pas la charge des veh pour le moment
 
 4 - Fix images propal :
 
-Permet de régler le problème d'affichage des images des outils dans les propals. Bug repéré sur certains objets rp. pas de fix prévu pour le moment.
+Permet de régler le problème d'affichage des images des outils et des objets rp dans les propals.
 
 5 - Communauté
 Script de Marthus mis à jour. Pas de support sur celui-ci.
