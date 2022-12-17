@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name      Messagerie
-// @version 1.0
+// @version 1.1
 // @author   Ce connard de Shao
-// @description Ajoute une interface cliquable pour les propals. Incrément et décrémente de 1. Shift+clique transfère tout le stock, ctrl+clique incrémente de 0.1
+// @description Ajoute une interface cliquable pour les propals. Incrémente et décrémente de 1. Shift+clic transfère tout le stock, ctrl+clic incrémente de 0.1
 // @match     https://v8.fract.org/msg_ecrire.php?*
 // ==/UserScript==
 //insertion CSS
@@ -73,6 +73,17 @@ addGlobalStyle(`
     flex-basis:25%;
     font-size:15px;
     }
+ .total{
+    flex-grow:1;
+    text-align:center;
+    flex-shrink:0;
+    flex-basis:25%;
+    font-size:15px;
+
+   }
+ .charge{
+ display:inline;
+ }
 `);
 class marchandise{
  constructor(nom, png, nb,index){
@@ -102,6 +113,7 @@ const fonctionDon= (qui,alt,march,casemarch) => {
     if(shift===true){
       addnb=march.nb;
       march.nb=0;
+
     }
     else if (ctrl===true){
       addnb=0.1;
@@ -116,9 +128,9 @@ const fonctionDon= (qui,alt,march,casemarch) => {
       addnb=1;
       march.nb-=addnb;
     }
-  
+
     casemarch.innerHTML='<img src="'+march.png+'" title="'+march.nom+'">'+march.nb;
- 
+
     if (addnb !==0){
       let exist=exmarchandises[qui].map(x => x.nom).indexOf(alt);
       if (exist===-1){
@@ -165,7 +177,6 @@ const fonctionback= (qui,item)=>{
   else{
     addnb=1
   }
-    
   let nb=Number(propal[item.index].getElementsByTagName("input")[0].value);
   nb-=addnb;
   propal[item.index].getElementsByTagName("input")[0].value=Math.round(nb*10)/10;
@@ -183,7 +194,9 @@ const fonctionback= (qui,item)=>{
 
 //recup une autre page et retourne le text
 async function ficheperso(url) {
-  return fetch(url).then(res => res.text());
+    let response= await fetch(url)
+    let f= response.text();
+  return f;
 }
 
 //fonction retournant un array d'objets marchandises par perso
@@ -246,7 +259,9 @@ function affechange () {
     }
   }
   //On remplit l'array exmarchandises des trucs contenu dans la propal
-  let i=0
+  let i=0;
+  let chargeaff,chargeaff2=0;
+  let poids=[0,0];
   for (let march of propal){
     let nb =Number(march.getElementsByTagName("input")[0].value);
     if(nb!==0){
@@ -257,11 +272,13 @@ function affechange () {
       let exmarch=new marchandise(alt,expng,nb,i);
       i+=1
       exmarchandises[qui].push(exmarch);
+      poids[qui]+=nb
     }
   }
 //affichage de l'echange
-  don.innerHTML=''
-  demande.innerHTML=''
+  don.innerHTML='';
+  demande.innerHTML='';
+
   for(let i=0 ;i<2;i++){
     for (let item of exmarchandises[i]){
     let casemarch=document.createElement('div');
@@ -272,6 +289,24 @@ function affechange () {
     tdpropal[i].appendChild(casemarch);
     }
   }
+  chargeaff=charge+poids[0]-poids[1];
+  chargeaff2=chargeaff2+poids[1]-poids[0];
+  tdcharge.innerHTML=Math.round((chargeaff)*10)/10;
+  tdcharge2.innerHTML=Math.round((Math.abs(chargeaff2))*10)/10;
+  if (chargeaff < 0){
+    tdcharge.style='color:red';
+  }
+  else{
+    tdcharge.style='';
+  }
+  if (chargeaff2 < 0){
+    perso2charge.textContent='Poids en plus : ';
+    perso2charge.appendChild(tdcharge2)
+  }
+  else{
+    perso2charge.textContent='Poids en moins : ';
+    perso2charge.appendChild(tdcharge2)
+  }
 }
 // on chope le cazid des deux persos
 let fiche = await ficheperso('https://v8.fract.org/p_carac.php');
@@ -280,18 +315,21 @@ cazid=cazid.split('.')[0];
 let cazidcible=document.getElementsByClassName("avatar-icon")[0] ;
 cazidcible=cazidcible.src.split('https://v8.fract.org/png/')[1];
 cazidcible=cazidcible.split('.')[0];
+//  On recup la charge dispo du joueur
+let charge=fiche.split('Libre<br />')[1];
+charge=Number(charge.split('kg')[0]);
+let chargeperso2=0;
 //On charge leur fiche dans le array persos
-const ficheperso1= await ficheperso('https://v8.fract.org/map_perso.php?cazid='+cazid);
-const ficheperso2= await ficheperso('https://v8.fract.org/map_perso.php?cazid='+cazidcible);
-const persos=[ficheperso1,ficheperso2];
+let ficheperso1= await ficheperso('https://v8.fract.org/map_perso.php?cazid='+cazid);
+let ficheperso2= await ficheperso('https://v8.fract.org/map_perso.php?cazid='+cazidcible);
+let persos=[ficheperso1,ficheperso2];
 //variables de traitement
 let perso;
 let pars=document.createElement('div');
 let m=0;
-let marchandises= await getmarch();
+let marchandises=getmarch();
 let exmarchandises=[[],[]]
 let propal,nbpropal;
-
 //affichage
 let stock=document.createElement('div');
 stock.className='panel panel-border panel-default';
@@ -326,8 +364,31 @@ let don=document.createElement('div');
 don.className='don';
 let demande=document.createElement('div');
 demande.className='don';
+let total=document.createElement('div');
+total.className="tableau"
+let persocharge=document.createElement('h4');
+persocharge.className="total";
+persocharge.innerHTML='Poids total : ';
+let tdcharge=document.createElement('p');
+tdcharge.className="charge";
+tdcharge.innerHTML=charge;
+let chargeholder1=document.createElement('h4');
+chargeholder1.className="total";
+let chargeholder2=document.createElement('h4');
+chargeholder2.className="total";
+let perso2charge=document.createElement('h4');
+perso2charge.className="total";
+perso2charge.innerHTML='Poids échangé : ';
+let tdcharge2=document.createElement('p');
+tdcharge2.className="charge";
+tdcharge2.innerHTML=chargeperso2;
+persocharge.appendChild(tdcharge);
+perso2charge.appendChild(tdcharge2);
+total.appendChild(persocharge);
+total.appendChild(chargeholder1);
+total.appendChild(chargeholder2);
+total.appendChild(perso2charge);
 //Placement
-//stock.prepend(titre);
 tableau.appendChild(perso1);
 tableau.appendChild(don);
 tableau.appendChild(demande);
@@ -335,6 +396,7 @@ tableau.appendChild(perso2);
 stock.appendChild(titre);
 stock.appendChild(document.createElement('hr'));
 stock.appendChild(tableau);
+stock.appendChild(total);
 document.getElementsByTagName('form')[0].insertBefore(stock,document.getElementsByClassName("card-content")[0])
 //array pour faciliter le traitement
 let tdpersos=[perso1,perso2];

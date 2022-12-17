@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Groupe
 // @namespace    http://fract.org
-// @version      1.0
+// @version      1.01
 // @description  Script de gestion du groupe. Manque la gestion des veh encore
 // @author       Ce connard de Shao
 // @match    https://v8.fract.org/g_mbr.php*
@@ -21,7 +21,7 @@ td {padding:5px;vertical-align: text-top;}
 thead{border-bottom: 0.5px solid #eee;color:#cccccc}
 tfoot{border-top: 0.5px solid #eee;}
 .tdmarchandise{text-align: center;}
-.tdnom{width:230px;}
+.tdnom{width:240px;}
 .nrt{text-align: center;color:brown;}
 .eau{text-align: center;color:blue;}
 .med{text-align: center;color:green;}
@@ -217,16 +217,21 @@ for (let perso of personnages){
   pv=perso.pv.split('>')[1];
   pvmax=pv.split('/')[1];
   pv=pv.split('/')[0];
-  tdpions.innerHTML=perso.pions+'<br>'+perso.pv;
+  let affpv=document.createElement("p");
+  affpv.innerHTML=perso.pv
+  console.log(affpv);
+  tdpions.innerHTML=perso.pions+'<br>';
+  tdpions.className="rouge";
+  tdpions.appendChild(affpv);
   //couleurs en fonction du nombre de pv restants
   if ((pv-pvmax) <=-1 & pv > 2.5){
-    tdpions.className="orange";
+    affpv.className="orange";
   }
   else if (pv <=2.5){
-    tdpions.className="rouge";
+     affpv.className="rouge";
   }
   else {
-   tdpions.className="vert";
+    affpv.className="vert";
   }
   //poids
   let tdpoids=document.createElement("td");
