@@ -2,13 +2,18 @@
 Divers outils pour fract
 
 Nécessite TamperMonkey : https://www.tampermonkey.net/
+Certains scripts marchent sur Kiwi (en installant tamper aussi) sur android.
+Pour celui sur les propals, uniquement les incréments de 1 en 1.
+Pour les autres, se mettre en mode ordinateur.
 
 1 - Messagerie : 
 
 Ajoute une interface pour élaborer les propals. L'interface originale garde la main in fine. 
-- 1 clique augmente ou diminue la quantité de 1
-- Shift + clique transfère tout le stock de la marchandise cliquée
-- Ctrl + clique augmente ou diminue de 0.1
+- 1 clic augmente ou diminue la quantité de 1
+- Shift + clic transfère tout le stock de la marchandise cliquée
+- Ctrl + clic augmente ou diminue de 0.1
+
+La charge du perso est indiquée. Le volume de l'échange avec la cible est indiqué (poids en plus ou moins pour lui.)
 
 2 - Navigation :
 
@@ -24,4 +29,7 @@ Ne gère pas la charge des veh pour le moment
 
 4 - Fix images propal :
 
-Permet de régler le problème d'affichage des images des outils dans les propals.
+Permet de régler le problème d'affichage des images des outils dans les propals. Bug repéré sur certains objets rp. pas de fix prévu pour le moment.
+
+5 - Communauté
+Script de Marthus mis à jour. Pas de support sur celui-ci.
