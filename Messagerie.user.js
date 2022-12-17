@@ -293,11 +293,15 @@ function affechange () {
   chargeaff2=chargeaff2+poids[1]-poids[0];
   tdcharge.innerHTML=Math.round((chargeaff)*10)/10;
   tdcharge2.innerHTML=Math.round((Math.abs(chargeaff2))*10)/10;
-  if (chargeaff < 0){
+  if (chargeaff <= 0.1){
     tdcharge.style='color:red';
+    persocharge.textContent='Surcharge : ';
+    persocharge.appendChild(tdcharge)
   }
-  else{
+  if (chargeaff >= 0){
     tdcharge.style='';
+    persocharge.textContent='Charge libre : ';
+    persocharge.appendChild(tdcharge)
   }
   if (chargeaff2 < 0){
     perso2charge.textContent='Poids en plus : ';
@@ -368,7 +372,7 @@ let total=document.createElement('div');
 total.className="tableau"
 let persocharge=document.createElement('h4');
 persocharge.className="total";
-persocharge.innerHTML='Poids total : ';
+persocharge.innerHTML='Charge : ';
 let tdcharge=document.createElement('p');
 tdcharge.className="charge";
 tdcharge.innerHTML=charge;
