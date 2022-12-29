@@ -19,6 +19,10 @@ La charge du perso est indiquée. Le volume de l'échange avec la cible est indi
 
 Ajoute des boutons de navigation aux points cardinaux pour éviter les missclick de la rose des vents. Celle-ci est conservée
 
+2 Bis : Navigation portable :
+
+Ajoute les boutons, fait sauter la rose des vents, mets la map à la taille d'un téléphone et affiche différemment les infos
+
 
 3 - Groupe :
 
