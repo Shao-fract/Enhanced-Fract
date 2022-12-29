@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Groupe
 // @namespace    http://fract.org
-// @version      1.01
-// @description  Script de gestion du groupe. Manque la gestion des veh encore
+// @version      1.1
+// @description  Script de gestion du groupe. Début de gestion VEH
 // @author       Ce connard de Shao
 // @match    https://v8.fract.org/g_mbr.php*
 
@@ -30,6 +30,13 @@ petit{font-size:10px;}
 .rouge{color:red}
 .vert{color:green}
 `);
+//recup une autre page et retourne le text
+async function ficheperso(url) {
+    let response= await fetch(url)
+    let f= response.text();
+  return f;
+}
+
 
 class personnage{
  constructor(cazid,nom, pions, pv,cbt){
@@ -53,6 +60,9 @@ class marchandise{
      this.nb=nb
  }
 }
+//recuo fiche du groupe
+let groupe=document.createElement('div');
+groupe.innerHTML= await ficheperso('https://v8.fract.org/g_carac.php');
 //recup des fiches persos
 const fiches=document.getElementsByClassName("card");
 let nom;
@@ -219,7 +229,6 @@ for (let perso of personnages){
   pv=pv.split('/')[0];
   let affpv=document.createElement("p");
   affpv.innerHTML=perso.pv
-  console.log(affpv);
   tdpions.innerHTML=perso.pions+'<br>';
   tdpions.className="rouge";
   tdpions.appendChild(affpv);
@@ -307,6 +316,12 @@ totalmed.innerHTML= Math.round(nem[2]*10)/10;
 totalmed.className="med";
 //poids
 let tdpoidstotal=document.createElement("td");
+groupe=groupe.getElementsByClassName("col-md-6")[0].getElementsByClassName("content")[0];
+let capagroupe = groupe.textContent.split(':')[1];
+capagroupe=Number(capagroupe.split('kg')[0]);
+let chargegroupe=groupe.textContent.split(':')[2];
+chargegroupe=Number(chargegroupe.split('kg')[0]);
+poidstotal=(capagroupe-chargegroupe);
 tdpoidstotal.innerHTML=Math.round(poidstotal*10)/10+' kg';
 let tdchargetotal=document.createElement("td");
 //charge et surcharge
@@ -365,11 +380,7 @@ cadre.innerHTML= '<div class="barre">'+
 cadre.getElementsByClassName('tableperso')[0].appendChild(tableperso);
 cadre.getElementsByClassName('affichemarchandises')[0].appendChild(affichemarchandises);
 
+document.getElementsByClassName("col-lg-12 col-md-12")[0].prepend(cadre);
 
-//load du script
-function synthese (){
-    document.getElementsByClassName("col-lg-12 col-md-12")[0].prepend(cadre);
-}
-document.body.onload=synthese;
 
 
