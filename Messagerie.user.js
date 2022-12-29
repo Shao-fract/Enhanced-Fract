@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name      Messagerie
-// @version 1.1
+// @version 1.11
 // @author   Ce connard de Shao
 // @description Ajoute une interface cliquable pour les propals. Incrémente et décrémente de 1. Shift+clic transfère tout le stock, ctrl+clic incrémente de 0.1
 // @match     https://v8.fract.org/msg_ecrire.php?*
@@ -313,15 +313,19 @@ function affechange () {
   }
 }
 // on chope le cazid des deux persos
-let fiche = await ficheperso('https://v8.fract.org/p_carac.php');
-let cazid=fiche.split('class="avatar-icon" src="./png/')[1] ;
+let fiche=document.createElement("div");
+fiche.innerHTML = await ficheperso('https://v8.fract.org/p_carac.php');
+let cazid=fiche.innerHTML.split('class="avatar-icon" src="./png/')[1] ;
 cazid=cazid.split('.')[0];
 let cazidcible=document.getElementsByClassName("avatar-icon")[0] ;
 cazidcible=cazidcible.src.split('https://v8.fract.org/png/')[1];
 cazidcible=cazidcible.split('.')[0];
 //  On recup la charge dispo du joueur
-let charge=fiche.split('Libre<br />')[1];
+
+let charge=fiche.getElementsByClassName('col-lg-4 col-md-4')[3].textContent
+charge=charge.split('Libre')[1];
 charge=Number(charge.split('kg')[0]);
+
 let chargeperso2=0;
 //On charge leur fiche dans le array persos
 let ficheperso1= await ficheperso('https://v8.fract.org/map_perso.php?cazid='+cazid);
