@@ -6,7 +6,7 @@
 // @match     https://v8.fract.org/msg_ecrire.php?*
 
 // ==/UserScript==
-let sacs=["Sac","sac","Besace","ravois","andau","hariot","artable","este","alise","T-shirt","seau","Seau","acoche","Housse","alette à outils","anier","Etui","Dry","Chicom","Ceinture","Cantine","Caddie","Cabas","Brouette","Body bag","Banane","Attaché-case"]
+let sacs=["Sac","sac","Besace","ravois","andau","hariot","artable","este","alise","T-shirt","T-Shirt cycliste","seau","Seau","acoche","Housse","alette à outils","anier","Etui","Dry","Chicom","Ceinture","Cantine","Caddie","Cabas","Brouette","Body bag","Banane","Attaché-case"]
 let outils=["Pelle","rongeurs","Filtre à eau","Mortier","Dico Médical","biche","Scie à métaux","à outils","Clef anglaise","Charrue","Bâche","Marteaux","Collet","calpel","Kit","Pioche","Outil","secours","ournevis","Manuel","Pompe","Cage","Piège","Ciseaux","Outre","Jerican","Lasso","Coupe Chaines",]
 let objets=document.querySelectorAll("*[bgcolor]");
 for (let fix of objets){
