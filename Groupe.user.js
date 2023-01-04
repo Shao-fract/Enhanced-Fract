@@ -37,7 +37,18 @@ async function ficheperso(url) {
   return f;
 }
 
-
+async function debarquer(cazid){
+ await fetch("https://v8.fract.org/g_veh.php?debarquer="+cazid);
+ document.location.reload(true);
+}
+async function embarquer(cazid){
+ await fetch("https://v8.fract.org/g_veh.php?embarquer="+cazid);
+ document.location.reload(true);
+}
+async function kicker(cazid){
+ await fetch("https://v8.fract.org/g_mbr.php?act=grp_virer&cazid="+cazid);
+ document.location.reload(true);
+}
 class personnage{
  constructor(cazid,nom, pions, pv,cbt){
      this.nom=nom
@@ -60,7 +71,7 @@ class marchandise{
      this.nb=nb
  }
 }
-//recuo fiche du groupe
+//recup fiche du groupe
 let groupe=document.createElement('div');
 groupe.innerHTML= await ficheperso('https://v8.fract.org/g_carac.php');
 //recup des fiches persos
@@ -275,11 +286,14 @@ for (let perso of personnages){
   let candid=document.createElement("td");
   candid.innerHTML='<a style="background-color: green !important;border-color:darkgreen !important;"  class="btn btn-info btn-fill btn-sm" href="https://v8.fract.org/msg_cand.php?cazid=' + perso.cazid + '" target=_blank><span class="ti-link"></span> Inviter</a>';
   let nompersoembarquer=document.createElement("td");
-  nompersoembarquer.innerHTML= '<a style="background-color: green !important;border-color:darkgreen !important"class="btn btn-info btn-fill btn-sm" href="https://v8.fract.org/g_veh.php?embarquer=' + perso.cazid + '" target=_blank><span class="ti-upload"></span> Embarquer</a>';
+  nompersoembarquer.innerHTML= '<div style="background-color: green !important;border-color:darkgreen !important"class="btn btn-info btn-fill btn-sm"><span class="ti-upload"></span> Embarquer</a>';
+  nompersoembarquer.addEventListener("click", function(){embarquer(perso.cazid)});
   let nompersodebarquer=document.createElement("td");
-  nompersodebarquer.innerHTML = '<a class="btn btn-info btn-fill btn-sm" href="https://v8.fract.org/g_veh.php?debarquer=' + perso.cazid + '"target=_blank><span class="ti-download"></span> Débarquer</a>';
+  nompersodebarquer.innerHTML = '<div class="btn btn-info btn-fill btn-sm"><span class="ti-download"></span>Débarquer</div>';
+  nompersodebarquer.addEventListener("click", function(){debarquer(perso.cazid)});
   let nompersovirer=document.createElement("td");
-  nompersovirer.innerHTML = '<a  class="btn btn-info btn-fill btn-sm" href="https://v8.fract.org/g_mbr.php?act=grp_virer&cazid=' + perso.cazid + '"target=_blank><span class="ti-unlink"></span> Kicker</a>';
+  nompersovirer.innerHTML = '<div  class="btn btn-info btn-fill btn-sm"><span class="ti-unlink"></span> Kicker</a>';
+  nompersovirer.addEventListener("click", function(){kicker(perso.cazid)});
   // on construit le tableau
   tr.appendChild(tdnom);
   tr.appendChild(tdpions);
@@ -303,7 +317,12 @@ for (let perso of personnages){
 let total=document.createElement("tr");
 //cbt
 let tdtotalcbt=document.createElement("td");
+let cbtgroupe=groupe.getElementsByClassName("col-md-4")[0].getElementsByClassName("col-lg-5 col-md-5")[1];
+cbtgroupe=cbtgroupe.textContent.slice(0,-5);
+let attaquegroupe=cbtgroupe.split('x')[1];
+let defensegroupe=cbtgroupe.split('x')[2];
 tdtotalcbt.innerHTML='<img src="https://www.fract.org/pix/caracteristique/cbt.png" alt="Combat Total">Cbt du groupe : '+Math.round(cbttotal*100)/100+'d'+Math.round(totaldegats*10)/10;
+tdtotalcbt.innerHTML+='<br>Attaque réelle : '+attaquegroupe+'<br>Défense réelle : '+defensegroupe;
 //nem
 let totalnrt=document.createElement("td")
 totalnrt.innerHTML= Math.round(nem[0]*10)/10;
@@ -333,7 +352,7 @@ if (poidstotal<0){
       charge="Libre :";
       tdpoidstotal.className="vert";
      }
-tdchargetotal.innerHTML=charge
+tdchargetotal.innerHTML=charge+'<br><petit>(Capacité totale du groupe : '+capagroupe+' kg)</petit>';
 // Construction du tfoot
 total.appendChild(tdtotalcbt);
 total.appendChild(document.createElement("td"));
