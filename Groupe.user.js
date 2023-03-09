@@ -163,7 +163,7 @@ for (fiche of fiches){
     if (png.includes('nrt')){
       perso.nrt=nbmarch;
     }
-    else if (png.includes('eau')){
+    else if (png.includes('/eau')){
       perso.eau=nbmarch;
     }
     else if (png.includes('med')){
