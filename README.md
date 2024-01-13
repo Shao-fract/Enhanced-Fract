@@ -17,7 +17,8 @@ La charge du perso est indiquée. Le volume de l'échange avec la cible est indi
 
 2 - Navigation :
 
-Ajoute des boutons de navigation aux points cardinaux pour éviter les missclick de la rose des vents. Celle-ci est conservée
+Ajoute des boutons de navigation aux points cardinaux pour éviter les missclick de la rose des vents.
+Vire aussi le nouveau bouton de déplacement de kv
 
 2 Bis : Navigation portable :
 
