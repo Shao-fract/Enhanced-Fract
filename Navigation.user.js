@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Navigation
 // @namespace    Go fuck yourself
-// @version      0.2
-// @description  Fuck la rose des vents et la nav chelou
+// @version      0.1
+// @description  Fuck la rose des vents
 // @author       Shao
 // @match        https://v8.fract.org/index.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=fract.org
@@ -94,13 +94,15 @@ terrain.className='card';
 let people=document.getElementsByClassName("col-lg-12 col-md-12")[0].getElementsByClassName("card")[0];
 document.getElementsByClassName("col-lg-12 col-md-12")[0].removeChild(people);
 
-let charge=groupe.getElementsByClassName("col-md-6")[0].getElementsByClassName("card")[0];
+let charge=groupe?.getElementsByClassName("col-md-6")[0]?.getElementsByClassName("card")[0];
 if (charge){
 }
 else{
     charge=perso.getElementsByClassName('card')[0];
 }
-const btndemerde=document.getElementsByClassName("btn-group")[0]
+
+const btndemerde=document.querySelector('.btn-group');
+console.log(btndemerde)
 btndemerde.remove()
 //affiche perso, coef de prod et cout de dep au lieu de rose des vents
 let rose=document.getElementsByClassName('card card-user')[0];
