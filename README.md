@@ -38,3 +38,7 @@ Permet de régler le problème d'affichage des images des outils et des objets r
 
 5 - Communauté
 Script de Marthus mis à jour. Pas de support sur celui-ci.
+
+6- Don't Hide
+Affiche sur la map tous les éléments d'une case et pas seulement le dernier.
+Encore un script de Marthus rénové.
